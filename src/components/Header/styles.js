@@ -1,35 +1,29 @@
 import styled from 'styled-components';
+
 import { Link } from 'react-router-dom';
+import { devices } from '../../styles/devices';
 
 export const Container = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 50px 0;
 `;
 
-export const Cart = styled(Link)`
+export const HomeLink = styled(Link)`
   display: flex;
+  justify-content: center;
   align-items: center;
-  text-decoration: none;
-  transition: opacity 0.2s;
 
-  &:hover {
-    opacity: 0.7;
+  img {
+    height: 200px;
+    width: auto;
   }
 
-  div {
-    text-align: right;
-    margin-right: 10px;
-
-    strong {
-      display: block;
-      color: #fff;
-    }
-
-    span {
-      font-size: 12px;
-      color: #999;
+  @media (max-width: ${devices.tablet}) {
+    img {
+      width: 80%;
+      height: auto;
     }
   }
 `;

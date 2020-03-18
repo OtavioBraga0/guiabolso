@@ -10,10 +10,9 @@ import {
 
 import { Container, ProductTable, Total } from './styles';
 
-import * as CartActions from '../../store/modules/cart/actions';
-import { formatPrice } from '../../util/format';
+import * as CategoryActions from '../../store/modules/category/actions';
 
-function Cart({ cart, removeFromCart, updateAmount, total }) {
+function Category({ category, removeFromCategory, updateAmount, total }) {
   function increment(product) {
     updateAmount(product.id, product.amount + 1);
   }
@@ -35,7 +34,7 @@ function Cart({ cart, removeFromCart, updateAmount, total }) {
           </tr>
         </thead>
         <tbody>
-          {cart.map(product => (
+          {category.map(product => (
             <tr>
               <td>
                 <img src={product.image} alt={product.title} />
@@ -61,7 +60,7 @@ function Cart({ cart, removeFromCart, updateAmount, total }) {
               <td>
                 <button
                   type="button"
-                  onClick={() => removeFromCart(product.id)}
+                  onClick={() => removeFromCategory(product.id)}
                 >
                   <MdDelete size={20} color="#7159c1" />
                 </button>
@@ -84,18 +83,12 @@ function Cart({ cart, removeFromCart, updateAmount, total }) {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
+  bindActionCreators(CategoryActions, dispatch);
 
 const mapStateToProps = state => ({
-  cart: state.cart.map(product => ({
+  category: state.category.map(product => ({
     ...product,
-    subtotal: formatPrice(product.price * product.amount),
   })),
-  total: formatPrice(
-    state.cart.reduce((total, product) => {
-      return total + product.price * product.amount;
-    }, 0)
-  ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
