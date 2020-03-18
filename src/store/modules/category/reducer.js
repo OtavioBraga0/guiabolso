@@ -1,40 +1,11 @@
 import produce from 'immer';
 
-export default function cart(state = [], action) {
+export default function category(state = {}, action) {
   switch (action.type) {
-    case '@category/ADD_SUCCESS':
+    case '@category/GET_REQUEST':
       return produce(state, draft => {
-        const productIndex = draft.findIndex(p => p.id === action.product.id);
-
-        if (productIndex >= 0) {
-          draft[productIndex].amount += 1;
-        } else {
-          draft.push({
-            ...action.product,
-            amount: 1,
-          });
-        }
+        draft.category = action.category;
       });
-    case '@category/REMOVE':
-      return produce(state, draft => {
-        const productIndex = draft.findIndex(p => p.id === action.id);
-
-        if (productIndex >= 0) {
-          draft.splice(productIndex, 1);
-        }
-      });
-    case '@category/UPDATE_AMOUNT': {
-      if (action.amount <= 0) {
-        return state;
-      }
-      return produce(state, draft => {
-        const productIndex = draft.findIndex(p => p.id === action.id);
-
-        if (productIndex >= 0) {
-          draft[productIndex].amount = Number(action.amount);
-        }
-      });
-    }
     default:
       return state;
   }

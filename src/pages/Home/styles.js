@@ -1,11 +1,21 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { devices } from '../../styles/devices';
+
 export const CategoryList = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   list-style: none;
+
+  @media (max-width: ${devices.mobileL}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (max-width: ${devices.tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   li {
     display: flex;

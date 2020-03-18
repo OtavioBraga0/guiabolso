@@ -1,13 +1,7 @@
-import { call, put, all, takeLatest } from 'redux-saga/effects';
+import { put, all, takeLatest } from 'redux-saga/effects';
 
-import api from '../../../services/api';
-
-import { addToCategorySuccess } from './actions';
-
-function* addToCategory({ id }) {
-  const response = yield call(api.get, `/products/${id}`);
-
-  yield put(addToCategorySuccess(response.data));
+function* getCategory({ category }) {
+  yield put(category);
 }
 
-export default all([takeLatest('@category/ADD_REQUEST', addToCategory)]);
+export default all([takeLatest('@category/GET_RIQUEST', getCategory)]);

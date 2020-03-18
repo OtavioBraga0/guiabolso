@@ -1,94 +1,44 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  MdRemoveCircleOutline,
-  MdAddCircleOutline,
-  MdDelete,
-} from 'react-icons/md';
 
-import { Container, ProductTable, Total } from './styles';
+import { Container } from './styles';
 
 import * as CategoryActions from '../../store/modules/category/actions';
 
-function Category({ category, removeFromCategory, updateAmount, total }) {
-  function increment(product) {
-    updateAmount(product.id, product.amount + 1);
+class Category extends Component {
+  state = {
+    category: '',
+  };
+
+  componentDidMount() {
+    const { category } = this.props.category;
+    const { history } = this.props;
+
+    if (category) {
+      this.setState({ category });
+    } else {
+      history.goBack();
+    }
   }
 
-  function decrement(product) {
-    updateAmount(product.id, product.amount - 1);
+  render() {
+    return (
+      <Container>
+        <footer>
+          <button type="button">Carregar outra</button>
+        </footer>
+      </Container>
+    );
   }
-
-  return (
-    <Container>
-      <ProductTable>
-        <thead>
-          <tr>
-            <th />
-            <th>PRODUTO</th>
-            <th>QTD</th>
-            <th>SUBTOTAL</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {category.map(product => (
-            <tr>
-              <td>
-                <img src={product.image} alt={product.title} />
-              </td>
-              <td>
-                <strong>{product.title}</strong>
-                <span>{product.priceFormatted}</span>
-              </td>
-              <td>
-                <div>
-                  <button type="button" onClick={() => decrement(product)}>
-                    <MdRemoveCircleOutline size={20} color="#7159c1" />
-                  </button>
-                  <input type="number" readOnly value={product.amount} />
-                  <button type="button" onClick={() => increment(product)}>
-                    <MdAddCircleOutline size={20} color="#7159c1" />
-                  </button>
-                </div>
-              </td>
-              <td>
-                <strong>{product.subtotal}</strong>
-              </td>
-              <td>
-                <button
-                  type="button"
-                  onClick={() => removeFromCategory(product.id)}
-                >
-                  <MdDelete size={20} color="#7159c1" />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </ProductTable>
-
-      <footer>
-        <button type="button">Finalizar Pedido</button>
-
-        <Total>
-          <span>TOTAL</span>
-          <strong>{total}</strong>
-        </Total>
-      </footer>
-    </Container>
-  );
 }
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CategoryActions, dispatch);
 
 const mapStateToProps = state => ({
-  category: state.category.map(product => ({
-    ...product,
-  })),
+  category: state.category,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);

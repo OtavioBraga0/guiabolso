@@ -18,6 +18,12 @@ class Home extends Component {
     this.setState({ categories: response.data });
   }
 
+  handleClick(category) {
+    const { getCategory } = this.props;
+
+    getCategory(category);
+  }
+
   render() {
     const { categories } = this.state;
 
@@ -25,7 +31,10 @@ class Home extends Component {
       <CategoryList>
         {categories.map(category => (
           <li key={category}>
-            <CategoryItem to="category">
+            <CategoryItem
+              to={`category/${category}`}
+              onClick={() => this.handleClick(category)}
+            >
               <img
                 src={`${process.env.PUBLIC_URL}/assets/${category}.png`}
                 alt={category}
@@ -39,14 +48,7 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  amount: state.category.reduce((amount, product) => {
-    amount[product.id] = product.amount;
-    return amount;
-  }, {}),
-});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CategoryActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);
