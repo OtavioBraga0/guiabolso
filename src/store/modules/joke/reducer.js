@@ -1,10 +1,10 @@
 import produce from 'immer';
 
-export default function category(state = {}, action) {
+export default function joke(state = {}, action) {
   switch (action.type) {
-    case '@category/LIST_SUCCESS':
+    case '@joke/GET_SUCCESS':
       return produce(state, draft => {
-        draft.data = action.category;
+        draft.data = action.joke;
       });
     default:
       return state;

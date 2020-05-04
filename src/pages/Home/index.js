@@ -1,40 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import api from '../../services/api';
-
-import * as CategoryActions from '../../store/modules/category/actions';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { CategoryList, CategoryItem } from './styles';
 
-class Home extends Component {
-  state = {
-    categories: [],
-  };
+import * as CategoryActions from '../../store/modules/category/actions';
 
-  async componentDidMount() {
-    const response = await api.get('/categories');
+export default function Home() {
+  const categories = useSelector(state => state.category.data);
+  const dispatch = useDispatch();
 
-    this.setState({ categories: response.data });
-  }
+  useEffect(() => {
+    dispatch(CategoryActions.listCategoryRequest());
+  }, [dispatch]);
 
-  handleClick(category) {
-    const { getCategory } = this.props;
-
-    getCategory(category);
-  }
-
-  render() {
-    const { categories } = this.state;
-
-    return (
-      <CategoryList>
-        {categories.map(category => (
+  return (
+    <CategoryList>
+      {categories &&
+        categories.map(category => (
           <li key={category}>
-            <CategoryItem
-              to={`category/${category}`}
-              onClick={() => this.handleClick(category)}
-            >
+            <CategoryItem to={`category/${category}`}>
               <img
                 src={`${process.env.PUBLIC_URL}/assets/${category}.png`}
                 alt={category}
@@ -43,12 +27,6 @@ class Home extends Component {
             </CategoryItem>
           </li>
         ))}
-      </CategoryList>
-    );
-  }
+    </CategoryList>
+  );
 }
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CategoryActions, dispatch);
-
-export default connect(null, mapDispatchToProps)(Home);

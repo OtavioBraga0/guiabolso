@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import { Container, HomeLink } from './styles';
 
@@ -15,6 +14,4 @@ function Header() {
   );
 }
 
-export default connect(state => ({
-  categorySize: state.category.length,
-}))(Header);
+export default Header;
