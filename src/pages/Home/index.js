@@ -18,7 +18,7 @@ export default function Home() {
       {categories &&
         categories.map(category => (
           <li key={category}>
-            <CategoryItem to={`category/${category}`}>
+            <CategoryItem to={`/${category}`}>
               <img
                 src={`${process.env.PUBLIC_URL}/assets/${category}.png`}
                 alt={category}

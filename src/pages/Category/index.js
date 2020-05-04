@@ -65,7 +65,7 @@ export default function Category({ match }) {
           categories.map(category =>
             getCategory !== category ? (
               <li key={category}>
-                <CategoryItem to={`/category/${category}`}>
+                <CategoryItem to={`/${category}`}>
                   <img
                     src={`${process.env.PUBLIC_URL}/assets/${category}.png`}
                     alt={category}
