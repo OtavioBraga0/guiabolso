@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { CategoryList, CategoryItem } from './styles';
+import { CategoryList } from './styles';
+
+import Category from '../../components/Category';
 
 import * as CategoryActions from '../../store/modules/category/actions';
 
@@ -16,17 +18,7 @@ export default function Home() {
   return (
     <CategoryList>
       {categories &&
-        categories.map(category => (
-          <li key={category}>
-            <CategoryItem to={`/${category}`}>
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/${category}.png`}
-                alt={category}
-              />
-              <strong>{category}</strong>
-            </CategoryItem>
-          </li>
-        ))}
+        categories.map(category => <Category category={category} />)}
     </CategoryList>
   );
 }
